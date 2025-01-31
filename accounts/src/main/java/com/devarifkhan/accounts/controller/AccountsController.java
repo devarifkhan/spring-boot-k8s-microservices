@@ -1,6 +1,7 @@
 package com.devarifkhan.accounts.controller;
 
 import com.devarifkhan.accounts.constants.AccountsConstants;
+import com.devarifkhan.accounts.dto.AccountContactInfoDto;
 import com.devarifkhan.accounts.dto.CustomerDto;
 import com.devarifkhan.accounts.dto.ErrorResponseDto;
 import com.devarifkhan.accounts.dto.ResponseDto;
@@ -47,6 +48,11 @@ public class AccountsController {
 
     @Autowired
     private Environment environment;
+
+    @Autowired
+    private AccountContactInfoDto accountContactInfoDto;
+
+
 
     @Operation(
             summary = "Create Account REST API",
@@ -220,6 +226,31 @@ public class AccountsController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(System.getProperty("java.version"));
+    }
+
+    @Operation(
+            summary = "Get Contact Info",
+            description = "Contact Info details that can be reached out in case of any issues"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Status OK"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "HTTP Status Internal Server Error",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+    }
+    )
+    @GetMapping("/contact-info")
+    public ResponseEntity<AccountContactInfoDto> getContactInfo() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(accountContactInfoDto);
     }
 
 }
