@@ -47,3 +47,9 @@ info:
     name: "cards"
     description: "Arif Bank Cards Application"
     version: "1.0.0"
+
+logging:
+  level:
+    com:
+      devarifkhan:
+        cards: DEBUG
