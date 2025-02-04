@@ -19,8 +19,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(
-        name = "REST API for Customers in EazyBank",
-        description = "REST APIs in EazyBank to FETCH customer details"
+        name = "REST API for Customers in ArifBank",
+        description = "REST APIs in ArifBank to FETCH customer details"
 )
 @RestController
 @RequestMapping(path="/api", produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -54,7 +54,7 @@ public class CustomerController {
     }
     )
     @GetMapping("/fetchCustomerDetails")
-    public ResponseEntity<CustomerDetailsDto> fetchCustomerDetails(@RequestHeader("eazybank-correlation-id")
+    public ResponseEntity<CustomerDetailsDto> fetchCustomerDetails(@RequestHeader("arifbank-correlation-id")
                                                                        String correlationId,
                                                                     @RequestParam @Pattern(regexp="(^$|[0-9]{10})",
                                                                             message = "Mobile number must be 10 digits")
