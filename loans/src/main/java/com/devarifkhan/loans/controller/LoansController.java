@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,27 +25,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import org.slf4j.Logger;
-
-
 /**
- * @author Ariful Islam
+ * @author Eazy Bytes
  */
 
 @Tag(
-        name = "CRUD REST APIs for Loans in ArifBank",
-        description = "CRUD REST APIs in ArifBank to CREATE, UPDATE, FETCH AND DELETE loan details"
+        name = "CRUD REST APIs for Loans in EazyBank",
+        description = "CRUD REST APIs in EazyBank to CREATE, UPDATE, FETCH AND DELETE loan details"
 )
 @RestController
 @RequestMapping(path = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
 @Validated
 public class LoansController {
+
     private static final Logger logger = LoggerFactory.getLogger(LoansController.class);
 
     private ILoansService iLoansService;
-
-    @Autowired
-    private LoansContactInfoDto loansContactInfoDto;
 
     public LoansController(ILoansService iLoansService) {
         this.iLoansService = iLoansService;
@@ -56,9 +52,12 @@ public class LoansController {
     @Autowired
     private Environment environment;
 
+    @Autowired
+    private LoansContactInfoDto loansContactInfoDto;
+
     @Operation(
             summary = "Create Loan REST API",
-            description = "REST API to create new loan inside ArifBank"
+            description = "REST API to create new loan inside EazyBank"
     )
     @ApiResponses({
             @ApiResponse(
@@ -103,14 +102,13 @@ public class LoansController {
     }
     )
     @GetMapping("/fetch")
-    public ResponseEntity<LoansDto> fetchLoanDetails(
-            @RequestHeader("arifbank-correlation-id") String correlationId,
-            @RequestParam
+    public ResponseEntity<LoansDto> fetchLoanDetails(@RequestHeader("eazybank-correlation-id") String correlationId,
+                                                                @RequestParam
                                                                @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits")
                                                                String mobileNumber) {
-        logger.debug("fetchCustomerDetails method start");
+        logger.debug("fetchLoanDetails method start");
         LoansDto loansDto = iLoansService.fetchLoan(mobileNumber);
-        logger.debug("fetchCustomerDetails method end");
+        logger.debug("fetchLoanDetails method end");
         return ResponseEntity.status(HttpStatus.OK).body(loansDto);
     }
 
@@ -188,11 +186,9 @@ public class LoansController {
         }
     }
 
-
-
     @Operation(
-            summary = "Get Contact Info",
-            description = "Contact Info details that can be reached out in case of any issues"
+            summary = "Get Build information",
+            description = "Get Build information that is deployed into cards microservice"
     )
     @ApiResponses({
             @ApiResponse(
@@ -209,13 +205,15 @@ public class LoansController {
     }
     )
     @GetMapping("/build-info")
-    public ResponseEntity<String> getBuildVersion() {
-        return ResponseEntity.status(HttpStatus.OK).body(buildVersion);
+    public ResponseEntity<String> getBuildInfo() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(buildVersion);
     }
 
     @Operation(
             summary = "Get Java version",
-            description = "Get Java versions details that is installed into accounts microservice"
+            description = "Get Java versions details that is installed into cards microservice"
     )
     @ApiResponses({
             @ApiResponse(
@@ -235,9 +233,8 @@ public class LoansController {
     public ResponseEntity<String> getJavaVersion() {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(System.getProperty("java.version"));
+                .body(environment.getProperty("JAVA_HOME"));
     }
-
 
     @Operation(
             summary = "Get Contact Info",
@@ -259,6 +256,7 @@ public class LoansController {
     )
     @GetMapping("/contact-info")
     public ResponseEntity<LoansContactInfoDto> getContactInfo() {
+        logger.debug("Invoked Loans contact-info API");
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(loansContactInfoDto);

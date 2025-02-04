@@ -12,35 +12,34 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
-/*@ComponentScans({ @ComponentScan("com.devarifkhan.loans.controller") })
-@EnableJpaRepositories("com.devarifkhan.loans.repository")
-@EntityScan("com.devarifkhan.loans.model")*/
+/*@ComponentScans({ @ComponentScan("com.eazybytes.loans.controller") })
+@EnableJpaRepositories("com.eazybytes.loans.repository")
+@EntityScan("com.eazybytes.loans.model")*/
 @EnableJpaAuditing(auditorAwareRef = "auditAwareImpl")
+@EnableConfigurationProperties(value = {LoansContactInfoDto.class})
 @OpenAPIDefinition(
-        info = @Info(
-                title = "Loans microservice REST API Documentation",
-                description = "ArifBank Loans microservice REST API Documentation",
-                version = "v1",
-                contact = @Contact(
-                        name = "Ariful Islam",
-                        email = "aidevstack@gmail.com",
-                        url = "https://www.aidevstack.com"
-                ),
-                license = @License(
-                        name = "Apache 2.0",
-                        url = "https://www.aidevstack.com"
-                )
-        ),
-        externalDocs = @ExternalDocumentation(
-                description = "ArifBank Loans microservice REST API Documentation",
-                url = "https://www.aidevstack.com/swagger-ui.html"
-        )
+		info = @Info(
+				title = "Loans microservice REST API Documentation",
+				description = "EazyBank Loans microservice REST API Documentation",
+				version = "v1",
+				contact = @Contact(
+						name = "Madan Reddy",
+						email = "tutor@eazybytes.com",
+						url = "https://www.eazybytes.com"
+				),
+				license = @License(
+						name = "Apache 2.0",
+						url = "https://www.eazybytes.com"
+				)
+		),
+		externalDocs = @ExternalDocumentation(
+				description = "EazyBank Loans microservice REST API Documentation",
+				url = "https://www.eazybytes.com/swagger-ui.html"
+		)
 )
-@EnableConfigurationProperties(value={LoansContactInfoDto.class})
 public class LoansApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(LoansApplication.class, args);
-    }
-
+	public static void main(String[] args) {
+		SpringApplication.run(LoansApplication.class, args);
+	}
 }

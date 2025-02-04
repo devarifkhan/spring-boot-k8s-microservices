@@ -1,7 +1,7 @@
 package com.devarifkhan.accounts.controller;
 
 import com.devarifkhan.accounts.constants.AccountsConstants;
-import com.devarifkhan.accounts.dto.AccountContactInfoDto;
+import com.devarifkhan.accounts.dto.AccountsContactInfoDto;
 import com.devarifkhan.accounts.dto.CustomerDto;
 import com.devarifkhan.accounts.dto.ErrorResponseDto;
 import com.devarifkhan.accounts.dto.ResponseDto;
@@ -28,22 +28,21 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * @author Ariful Islam
+ * @author Eazy Bytes
  */
 
 @Tag(
-        name = "CRUD REST APIs for Accounts in ArifBank",
-        description = "CRUD REST APIs in ArifBank to CREATE, UPDATE, FETCH AND DELETE account details"
+        name = "CRUD REST APIs for Accounts in EazyBank",
+        description = "CRUD REST APIs in EazyBank to CREATE, UPDATE, FETCH AND DELETE account details"
 )
 @RestController
-@RequestMapping(path = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(path="/api", produces = {MediaType.APPLICATION_JSON_VALUE})
 @Validated
 public class AccountsController {
 
     private static final Logger logger = LoggerFactory.getLogger(AccountsController.class);
 
-
-    private IAccountsService iAccountsService;
+    private final IAccountsService iAccountsService;
 
     public AccountsController(IAccountsService iAccountsService) {
         this.iAccountsService = iAccountsService;
@@ -56,12 +55,11 @@ public class AccountsController {
     private Environment environment;
 
     @Autowired
-    private AccountContactInfoDto accountContactInfoDto;
-
+    private AccountsContactInfoDto accountsContactInfoDto;
 
     @Operation(
             summary = "Create Account REST API",
-            description = "REST API to create new Customer &  Account inside ArifBank"
+            description = "REST API to create new Customer &  Account inside EazyBank"
     )
     @ApiResponses({
             @ApiResponse(
@@ -105,8 +103,8 @@ public class AccountsController {
     )
     @GetMapping("/fetch")
     public ResponseEntity<CustomerDto> fetchAccountDetails(@RequestParam
-                                                           @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits")
-                                                           String mobileNumber) {
+                                                               @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits")
+                                                               String mobileNumber) {
         CustomerDto customerDto = iAccountsService.fetchAccount(mobileNumber);
         return ResponseEntity.status(HttpStatus.OK).body(customerDto);
     }
@@ -136,11 +134,11 @@ public class AccountsController {
     @PutMapping("/update")
     public ResponseEntity<ResponseDto> updateAccountDetails(@Valid @RequestBody CustomerDto customerDto) {
         boolean isUpdated = iAccountsService.updateAccount(customerDto);
-        if (isUpdated) {
+        if(isUpdated) {
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body(new ResponseDto(AccountsConstants.STATUS_200, AccountsConstants.MESSAGE_200));
-        } else {
+        }else{
             return ResponseEntity
                     .status(HttpStatus.EXPECTATION_FAILED)
                     .body(new ResponseDto(AccountsConstants.STATUS_417, AccountsConstants.MESSAGE_417_UPDATE));
@@ -171,14 +169,14 @@ public class AccountsController {
     )
     @DeleteMapping("/delete")
     public ResponseEntity<ResponseDto> deleteAccountDetails(@RequestParam
-                                                            @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits")
-                                                            String mobileNumber) {
+                                                                @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits")
+                                                                String mobileNumber) {
         boolean isDeleted = iAccountsService.deleteAccount(mobileNumber);
-        if (isDeleted) {
+        if(isDeleted) {
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body(new ResponseDto(AccountsConstants.STATUS_200, AccountsConstants.MESSAGE_200));
-        } else {
+        }else{
             return ResponseEntity
                     .status(HttpStatus.EXPECTATION_FAILED)
                     .body(new ResponseDto(AccountsConstants.STATUS_417, AccountsConstants.MESSAGE_417_DELETE));
@@ -186,8 +184,8 @@ public class AccountsController {
     }
 
     @Operation(
-            summary = "Get Contact Info",
-            description = "Contact Info details that can be reached out in case of any issues"
+            summary = "Get Build information",
+            description = "Get Build information that is deployed into accounts microservice"
     )
     @ApiResponses({
             @ApiResponse(
@@ -203,16 +201,20 @@ public class AccountsController {
             )
     }
     )
-    @Retry(name = "getBuildVersion", fallbackMethod = "getBuildInfoFallback")
+    @Retry(name = "getBuildInfo",fallbackMethod = "getBuildInfoFallback")
     @GetMapping("/build-info")
-    public ResponseEntity<String> getBuildVersion() {
-        logger.debug("getBuildVersion() method Invoked");
-        return ResponseEntity.status(HttpStatus.OK).body(buildVersion);
+    public ResponseEntity<String> getBuildInfo() {
+        logger.debug("getBuildInfo() method Invoked");
+        return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(buildVersion);
     }
 
     public ResponseEntity<String> getBuildInfoFallback(Throwable throwable) {
         logger.debug("getBuildInfoFallback() method Invoked");
-        return ResponseEntity.status(HttpStatus.OK).body("1.0.0");
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("0.9");
     }
 
     @Operation(
@@ -233,19 +235,18 @@ public class AccountsController {
             )
     }
     )
-
-    @RateLimiter(name="getJavaVersion",fallbackMethod = "getJavaVersionFallback")
+    @RateLimiter(name= "getJavaVersion", fallbackMethod = "getJavaVersionFallback")
     @GetMapping("/java-version")
     public ResponseEntity<String> getJavaVersion() {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(System.getProperty("java.version"));
+                .body(environment.getProperty("JAVA_HOME"));
     }
 
     public ResponseEntity<String> getJavaVersionFallback(Throwable throwable) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body("Java 17");
+                .body("Java 21");
     }
 
     @Operation(
@@ -267,10 +268,11 @@ public class AccountsController {
     }
     )
     @GetMapping("/contact-info")
-    public ResponseEntity<AccountContactInfoDto> getContactInfo() {
+    public ResponseEntity<AccountsContactInfoDto> getContactInfo() {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(accountContactInfoDto);
+                .body(accountsContactInfoDto);
     }
+
 
 }

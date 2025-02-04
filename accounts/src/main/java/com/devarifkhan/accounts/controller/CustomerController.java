@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.*;
 @Validated
 public class CustomerController {
 
-    private static final Logger logger= LoggerFactory.getLogger(CustomerController.class);
+    private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
 
     private final ICustomersService iCustomersService;
 
@@ -54,11 +54,13 @@ public class CustomerController {
     }
     )
     @GetMapping("/fetchCustomerDetails")
-    public ResponseEntity<CustomerDetailsDto> fetchCustomerDetails(@RequestHeader("arifbank-correlation-id") String correlationId, @RequestParam
-                                                                   @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits")
-                                                                   String mobileNumber){
+    public ResponseEntity<CustomerDetailsDto> fetchCustomerDetails(@RequestHeader("eazybank-correlation-id")
+                                                                       String correlationId,
+                                                                    @RequestParam @Pattern(regexp="(^$|[0-9]{10})",
+                                                                            message = "Mobile number must be 10 digits")
+                                                                   String mobileNumber) {
         logger.debug("fetchCustomerDetails method start");
-        CustomerDetailsDto customerDetailsDto = iCustomersService.fetchCustomerDetails(mobileNumber,correlationId);
+        CustomerDetailsDto customerDetailsDto = iCustomersService.fetchCustomerDetails(mobileNumber, correlationId);
         logger.debug("fetchCustomerDetails method end");
         return ResponseEntity.status(HttpStatus.SC_OK).body(customerDetailsDto);
 
