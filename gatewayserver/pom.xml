@@ -61,6 +61,10 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-circuitbreaker-reactor-resilience4j</artifactId>
         </dependency>
@@ -89,7 +93,7 @@
                 <version>3.4.4</version>
                 <configuration>
                     <to>
-                        <image>devarifkhan/${project.artifactId}:s9</image>
+                        <image>devarifkhan/${project.artifactId}:s11</image>
                     </to>
                 </configuration>
             </plugin>
