@@ -9,9 +9,8 @@ spring:
       server:
         # native:
           # search-locations: "classpath:/config"
-          # search-locations: "file:///Users//eazybytes//Documents//config"
         git:
-          uri: "https://github.com/eazybytes/eazybytes-config.git"
+          uri: "https://github.com/devarifkhan/microservice-config.git"
           default-label: main
           timeout: 5
           clone-on-start: true
@@ -36,7 +35,7 @@ management:
       application: ${spring.application.name}
 
 encrypt:
-  key: "45D81EC1EF61DF9AD8D3E5BB397F9"
+  key: "72917435e3a637749b2abdb9bce96ddf66950fef88b8e62243cb9518fe017359b591368b18792f78db612d30e9782847"
 
 server:
   port: 8071
