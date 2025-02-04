@@ -45,6 +45,7 @@ management:
       application: ${spring.application.name}
 
 
+
 eureka:
   instance:
     preferIpAddress: true
