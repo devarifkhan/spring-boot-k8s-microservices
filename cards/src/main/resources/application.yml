@@ -6,7 +6,7 @@ spring:
   profiles:
     active: "prod"
   datasource:
-    url: jdbc:h2:mem:testdb
+    url: jdbc:h2:mem:test
     driverClassName: org.h2.Driver
     username: sa
     password: ''
@@ -57,7 +57,7 @@ eureka:
 info:
   app:
     name: "cards"
-    description: "Eazy Bank Cards Application"
+    description: "Arif Bank Cards Application"
     version: "1.0.0"
 
 logging:
