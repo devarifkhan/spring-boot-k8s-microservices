@@ -30,8 +30,8 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @Tag(
-        name = "CRUD REST APIs for Cards in EazyBank",
-        description = "CRUD REST APIs in EazyBank to CREATE, UPDATE, FETCH AND DELETE card details"
+        name = "CRUD REST APIs for Cards in ArifBank",
+        description = "CRUD REST APIs in ArifBank to CREATE, UPDATE, FETCH AND DELETE card details"
 )
 @RestController
 @RequestMapping(path = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -57,7 +57,7 @@ public class CardsController {
 
     @Operation(
             summary = "Create Card REST API",
-            description = "REST API to create new Card inside EazyBank"
+            description = "REST API to create new Card inside ArifBank"
     )
     @ApiResponses({
             @ApiResponse(
@@ -101,7 +101,7 @@ public class CardsController {
             )
     })
     @GetMapping("/fetch")
-    public ResponseEntity<CardsDto> fetchCardDetails(@RequestHeader("eazybank-correlation-id") String correlationId,
+    public ResponseEntity<CardsDto> fetchCardDetails(@RequestHeader("arifbank-correlation-id") String correlationId,
                                                                 @RequestParam
                                                                @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits")
                                                                String mobileNumber) {
