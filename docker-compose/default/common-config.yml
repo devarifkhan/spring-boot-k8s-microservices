@@ -1,7 +1,7 @@
 services:
   network-deploy-service:
     networks:
-      - arifbank
+      - eazybank
 
   microservice-base-config:
     extends:

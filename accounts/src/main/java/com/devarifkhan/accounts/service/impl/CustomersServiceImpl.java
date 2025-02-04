@@ -11,9 +11,9 @@ import com.devarifkhan.accounts.mapper.AccountsMapper;
 import com.devarifkhan.accounts.mapper.CustomerMapper;
 import com.devarifkhan.accounts.repository.AccountsRepository;
 import com.devarifkhan.accounts.repository.CustomerRepository;
-import com.devarifkhan.accounts.service.Client.CardsFeignClient;
-import com.devarifkhan.accounts.service.Client.LoansFeignClient;
 import com.devarifkhan.accounts.service.ICustomersService;
+import com.devarifkhan.accounts.service.client.CardsFeignClient;
+import com.devarifkhan.accounts.service.client.LoansFeignClient;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -29,10 +29,11 @@ public class CustomersServiceImpl implements ICustomersService {
 
     /**
      * @param mobileNumber - Input Mobile Number
+     *  @param correlationId - Correlation ID value generated at Edge server
      * @return Customer Details based on a given mobileNumber
      */
     @Override
-    public CustomerDetailsDto fetchCustomerDetails(String mobileNumber,String correlationId) {
+    public CustomerDetailsDto fetchCustomerDetails(String mobileNumber, String correlationId) {
         Customer customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(
                 () -> new ResourceNotFoundException("Customer", "mobileNumber", mobileNumber)
         );
@@ -43,14 +44,16 @@ public class CustomersServiceImpl implements ICustomersService {
         CustomerDetailsDto customerDetailsDto = CustomerMapper.mapToCustomerDetailsDto(customer, new CustomerDetailsDto());
         customerDetailsDto.setAccountsDto(AccountsMapper.mapToAccountsDto(accounts, new AccountsDto()));
 
-        ResponseEntity<LoansDto> loansDtoResponseEntity = loansFeignClient.fetchLoanDetails(correlationId,mobileNumber);
-        if(null!=loansDtoResponseEntity) {
+        ResponseEntity<LoansDto> loansDtoResponseEntity = loansFeignClient.fetchLoanDetails(correlationId, mobileNumber);
+        if(null != loansDtoResponseEntity) {
             customerDetailsDto.setLoansDto(loansDtoResponseEntity.getBody());
         }
-        ResponseEntity<CardsDto> cardsDtoResponseEntity = cardsFeignClient.fetchCardDetails(correlationId,mobileNumber);
-        if(null!=cardsDtoResponseEntity) {
+
+        ResponseEntity<CardsDto> cardsDtoResponseEntity = cardsFeignClient.fetchCardDetails(correlationId, mobileNumber);
+        if(null != cardsDtoResponseEntity) {
             customerDetailsDto.setCardsDto(cardsDtoResponseEntity.getBody());
         }
+
 
         return customerDetailsDto;
 
