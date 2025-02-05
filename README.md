@@ -31,3 +31,20 @@ To run RabbitMQ, use the following Docker command:
 
 ```sh
 docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:4.0-management
+````
+## KeyCloak
+
+To run KeyCloak, use the following Docker command:
+
+```sh
+docker run -p 7080:8080 -e KC_BOOTSTRAP_ADMIN_USERNAME=admin -e KC_BOOTSTRAP_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:26.1.0 start-dev
+```
+
+### Redis
+
+To run Redis, use the following Docker command:
+
+```sh
+docker run --name redis-container -p 6379:6379 redis
+```
+
