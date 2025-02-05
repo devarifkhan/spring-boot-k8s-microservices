@@ -12,7 +12,7 @@
     <artifactId>gatewayserver</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>gatewayserver</name>
-    <description>Edge Server for Eazy Bank microservices</description>
+    <description>Edge Server for Arif Bank microservices</description>
     <url/>
     <licenses>
         <license/>
@@ -118,7 +118,7 @@
                 <version>3.4.2</version>
                 <configuration>
                     <to>
-                        <image>devarifkhan/${project.artifactId}:s11</image>
+                        <image>devarifkhan/${project.artifactId}:s12</image>
                     </to>
                 </configuration>
             </plugin>
