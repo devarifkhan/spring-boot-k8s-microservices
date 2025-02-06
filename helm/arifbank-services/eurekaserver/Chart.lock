@@ -1,0 +1,6 @@
+dependencies:
+- name: arifbank-common
+  repository: file://../../arifbank-common
+  version: 0.1.0
+digest: sha256:2a162d8e3ba200e29a626bb542542c131edd5b906a7200ee1898132374272fce
+generated: "2025-02-06T12:02:17.089215025+06:00"
