@@ -1,27 +1,27 @@
 dependencies:
-- name: eazybank-common
-  repository: file://../../eazybank-common
+- name: arifbank-common
+  repository: file://../../arifbank-common
   version: 0.1.0
 - name: configserver
-  repository: file://../../eazybank-services/configserver
+  repository: file://../../arifbank-services/configserver
   version: 0.1.0
 - name: eurekaserver
-  repository: file://../../eazybank-services/eurekaserver
+  repository: file://../../arifbank-services/eurekaserver
   version: 0.1.0
 - name: accounts
-  repository: file://../../eazybank-services/accounts
+  repository: file://../../arifbank-services/accounts
   version: 0.1.0
 - name: cards
-  repository: file://../../eazybank-services/cards
+  repository: file://../../arifbank-services/cards
   version: 0.1.0
 - name: loans
-  repository: file://../../eazybank-services/loans
+  repository: file://../../arifbank-services/loans
   version: 0.1.0
 - name: gatewayserver
-  repository: file://../../eazybank-services/gatewayserver
+  repository: file://../../arifbank-services/gatewayserver
   version: 0.1.0
 - name: message
-  repository: file://../../eazybank-services/message
+  repository: file://../../arifbank-services/message
   version: 0.1.0
-digest: sha256:d9aec855311f72286a711322734358fd90d61e7ab0e8ef80dea05b637e020544
-generated: "2023-09-01T12:06:31.531688+05:30"
+digest: sha256:a3dba68768b84662d5bc2d8cb17b06abd5bdd801b6b384e05297d30cec9d205c
+generated: "2025-02-06T12:21:22.373312757+06:00"
