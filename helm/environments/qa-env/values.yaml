@@ -1,5 +1,5 @@
 global:
-  configMapName: eazybankqa-configmap
+  configMapName: arifbankqa-configmap
   activeProfile: qa
   configServerURL: configserver:http://configserver:8071/
   eurekaServerURL: http://eurekaserver:8070/eureka/
